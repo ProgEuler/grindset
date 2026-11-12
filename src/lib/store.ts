@@ -124,7 +124,7 @@ export const useApp = create<AppState>()(
 
       resetProgress: () => set({ tracks: {}, activity: {} }),
     }),
-    { name: "skillforge", version: 1, skipHydration: true }
+    { name: "grindset", version: 1, skipHydration: true }
   )
 )
 

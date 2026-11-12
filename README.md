@@ -1,4 +1,4 @@
-# SkillForge
+# Grindset
 
 An interactive "learn by doing" platform, modeled on the mechanics of VimHero but generalized so the same
 lessons / challenges / practice / XP system can teach any skill. Ships with two tracks:
