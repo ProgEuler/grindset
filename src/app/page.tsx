@@ -1,69 +1,138 @@
-import Image from "next/image";
+import Link from "next/link"
+import { ArrowRightIcon, BrainCircuitIcon, KeyboardIcon, LayersIcon, RepeatIcon } from "lucide-react"
+import { TRACKS, lessonCount } from "@/lib/tracks"
+import { PRO_PLAN, SITE } from "@/lib/config"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { KeyBadge } from "@/components/key-badge"
+import { TryIt } from "@/components/home/try-it"
+
+const STEPS = [
+  {
+    icon: KeyboardIcon,
+    title: "Learn by doing",
+    text: "Every lesson drops you into a real, working editor. You start pressing keys right away.",
+  },
+  {
+    icon: RepeatIcon,
+    title: "Build muscle memory",
+    text: "Challenges are generated fresh every time, so you can repeat them until the moves feel automatic. Each command levels up as you go.",
+  },
+  {
+    icon: LayersIcon,
+    title: "Structured from zero",
+    text: "A curriculum that builds step by step, from the first keystroke to advanced techniques. You don't need any setup or prior experience.",
+  },
+]
 
 export default function Home() {
+  const vim = lessonCount(TRACKS[0])
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main className="mx-auto w-full max-w-6xl space-y-24 px-4 py-16">
+      <section className="grid items-center gap-10 lg:grid-cols-2 [&>*]:min-w-0">
+        <div className="space-y-6">
+          <Badge variant="secondary">Interactive · in your browser · free to start</Badge>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Learn Vim. <span className="text-primary">Finally make it stick.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-muted-foreground">
+            {SITE.name} teaches through hands-on drills that build real muscle memory. Master motions, operators and text objects with{" "}
+            {vim.total} interactive lessons, then take the same approach to other skills.
           </p>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/learn/vim" className={buttonVariants({ size: "lg" })}>
+              Start learning Vim <ArrowRightIcon />
+            </Link>
+            <Link href="/tracks" className={buttonVariants({ size: "lg", variant: "outline" })}>
+              Browse tracks
+            </Link>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            Try it now: use <KeyBadge k="w" /> <KeyBadge k="e" /> <KeyBadge k="b" /> <KeyBadge k="h" /> <KeyBadge k="j" /> <KeyBadge k="k" />{" "}
+            <KeyBadge k="l" /> to reach the green target →
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="min-w-0">
+          <TryIt />
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      <section className="space-y-8">
+        <h2 className="text-center text-sm font-semibold tracking-widest text-muted-foreground uppercase">How it works</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {STEPS.map((s, i) => (
+            <Card key={s.title}>
+              <CardHeader>
+                <div className="font-mono text-xs text-muted-foreground">0{i + 1}</div>
+                <CardTitle className="flex items-center gap-2">
+                  <s.icon className="size-5 text-primary" /> {s.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">{s.text}</CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">Tracks</h2>
+          <p className="text-muted-foreground">One engine, many skills. New tracks plug into the same lessons, practice and stats.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {TRACKS.map((t) => {
+            const c = lessonCount(t)
+            return (
+              <Card key={t.slug}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BrainCircuitIcon className="size-5 text-primary" /> {t.title}
+                  </CardTitle>
+                  <CardDescription>{t.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex gap-2 text-xs">
+                  <Badge variant="secondary">{c.total} lessons</Badge>
+                  <Badge variant="outline">{c.free} free</Badge>
+                  <Badge variant="outline">{t.engine === "vim" ? "live editor" : "recall drills"}</Badge>
+                </CardContent>
+                <CardFooter>
+                  <Link href={`/learn/${t.slug}`} className={buttonVariants({ variant: "secondary" })}>
+                    Start {t.title} <ArrowRightIcon />
+                  </Link>
+                </CardFooter>
+              </Card>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border bg-muted/30 p-10 text-center">
+        <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Free to start</p>
+        <h2 className="mt-2 text-3xl font-bold">No setup. No config files.</h2>
+        <p className="mt-2 text-muted-foreground">
+          Just open your browser and start moving. Unlock everything for ${PRO_PLAN.price}, once.
+        </p>
+        <div className="mt-6 flex justify-center gap-3">
+          <Link href="/learn/vim" className={buttonVariants({ size: "lg" })}>
+            Start learning
+          </Link>
+          <Link href="/upgrade" className={cn(buttonVariants({ size: "lg", variant: "outline" }))}>
+            See Pro
+          </Link>
+        </div>
+      </section>
+
+      <footer className="flex justify-between border-t pt-6 text-xs text-muted-foreground">
+        <span>
+          © {SITE.name}
+        </span>
+        <span className="flex gap-4">
+          <Link href="/about">About</Link>
+          <Link href="/tracks">Tracks</Link>
+        </span>
+      </footer>
+    </main>
+  )
 }

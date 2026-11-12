@@ -944,7 +944,7 @@ function execNormal(st: VimState, t: string[]): ExecResult {
       const lead = lines[out.pos.line].slice(0, out.pos.col)
       if (lead.trim() === "") b = toOffset(lines, { line: out.pos.line - 1, col: lines[out.pos.line - 1].length })
     }
-    let s = Math.min(a, b)
+    const s = Math.min(a, b)
     let e = Math.max(a, b)
     if (out.inclusive) e += 1
     if (s === e) return { state: st, commands: [] }
@@ -1190,4 +1190,6 @@ export function keyFromEvent(e: { key: string; ctrlKey: boolean; metaKey: boolea
     return null
   }
   if (["Escape", "Enter", "Backspace", "Tab"].includes(e.key)) return e.key
-  if (e.key.length === 1) re
+  if (e.key.length === 1) return e.key
+  return null
+}
