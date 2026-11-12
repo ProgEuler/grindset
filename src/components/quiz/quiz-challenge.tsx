@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { CheckCircle2Icon, RotateCcwIcon, TrophyIcon, XCircleIcon } from "lucide-react"
+import { CircleCheck, Rotate, BadgeCheck, CircleXmark } from "@meteor-icons/react"
 import type { QuizQuestion } from "@/lib/tracks/types"
 import { makeRng, type Rng } from "@/lib/vim/generators"
 import { useApp } from "@/lib/store"
@@ -101,7 +101,7 @@ export function QuizChallenge({ track, questions, rounds, onFinish, doneActions 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrophyIcon className="size-5 text-amber-500" /> Quiz complete
+            <BadgeCheck className="size-5 text-amber-500" /> Quiz complete
           </CardTitle>
           <CardDescription>
             {score.right}/{order.length} right on the first try, in {formatTime(done)}. +{score.xp} xp
@@ -109,7 +109,7 @@ export function QuizChallenge({ track, questions, rounds, onFinish, doneActions 
         </CardHeader>
         <CardFooter className="gap-2">
           <Button variant="secondary" onClick={restart}>
-            <RotateCcwIcon /> Try again
+            <Rotate /> Try again
           </Button>
           {doneActions}
         </CardFooter>
@@ -168,12 +168,12 @@ export function QuizChallenge({ track, questions, rounds, onFinish, doneActions 
           )}
           {result === "right" && (
             <p className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
-              <CheckCircle2Icon className="size-4" /> Correct! {q.explain}
+              <CircleCheck className="size-4" /> Correct! {q.explain}
             </p>
           )}
           {result === "wrong" && (
             <p className="flex items-center gap-2 text-sm text-rose-600 dark:text-rose-400">
-              <XCircleIcon className="size-4" /> Not quite.
+              <CircleXmark className="size-4" /> Not quite.
               {tries >= 2 && (
                 <span>
                   {" "}

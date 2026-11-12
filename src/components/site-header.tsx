@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { BarChart3Icon, BookOpenIcon, CrownIcon, DumbbellIcon, LogOutIcon, MoonIcon, SettingsIcon, SunIcon, UserIcon, ZapIcon } from "lucide-react"
+import { TrendingUp, BookOpen, Star, Fire, Power, Moon, Gear, Sun, User, Bolt } from "@meteor-icons/react"
 import { TRACKS, getTrack } from "@/lib/tracks"
 import { SITE } from "@/lib/config"
 import { useApp, useHydrated } from "@/lib/store"
@@ -36,16 +36,16 @@ export function SiteHeader() {
   const { resolvedTheme, setTheme } = useTheme()
 
   const nav = [
-    { href: `/learn/${track.slug}${lastLesson ? `/${lastLesson}` : ""}`, match: "/learn", label: "Lessons", icon: BookOpenIcon },
-    { href: `/practice/${track.slug}`, match: "/practice", label: "Practice", icon: DumbbellIcon },
-    { href: `/stats?track=${track.slug}`, match: "/stats", label: "Stats", icon: BarChart3Icon },
+    { href: `/learn/${track.slug}${lastLesson ? `/${lastLesson}` : ""}`, match: "/learn", label: "Lessons", icon: BookOpen },
+    { href: `/practice/${track.slug}`, match: "/practice", label: "Practice", icon: Fire },
+    { href: `/stats?track=${track.slug}`, match: "/stats", label: "Stats", icon: TrendingUp },
   ]
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-4 px-4">
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <ZapIcon className="size-5 text-primary" />
+          <Bolt className="size-5 text-primary" />
           <span className="hidden sm:inline">{SITE.name}</span>
         </Link>
 
@@ -81,7 +81,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-1">
           {hydrated && !pro && (
             <Link href="/upgrade?source=nav" className={cn(buttonVariants({ size: "sm" }), "bg-amber-500 text-black hover:bg-amber-400")}>
-              <CrownIcon /> <span className="hidden sm:inline">Upgrade</span>
+              <Star /> <span className="hidden sm:inline">Upgrade</span>
             </Link>
           )}
           <Button
@@ -90,12 +90,12 @@ export function SiteHeader() {
             aria-label="Toggle theme"
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           >
-            <SunIcon className="hidden dark:block" />
-            <MoonIcon className="dark:hidden" />
+            <Sun className="hidden dark:block" />
+            <Moon className="dark:hidden" />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" aria-label="Account" />}>
-              <UserIcon />
+              <User />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuGroup>
@@ -107,12 +107,12 @@ export function SiteHeader() {
               <DropdownMenuSeparator />
               {!user && <DropdownMenuItem onClick={() => router.push("/signin")}>Sign in</DropdownMenuItem>}
               <DropdownMenuItem onClick={() => router.push("/settings")}>
-                <SettingsIcon /> Settings
+                <Gear /> Settings
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push("/about")}>About</DropdownMenuItem>
               {user && (
                 <DropdownMenuItem onClick={signOut}>
-                  <LogOutIcon /> Sign out
+                  <Power /> Sign out
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

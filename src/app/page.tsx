@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRightIcon, BrainCircuitIcon, KeyboardIcon, LayersIcon, RepeatIcon } from "lucide-react"
+import { ArrowRight, Microchip, Command, Layers, Refresh } from "@meteor-icons/react"
 import { TRACKS, lessonCount } from "@/lib/tracks"
 import { PRO_PLAN, SITE } from "@/lib/config"
 import { cn } from "@/lib/utils"
@@ -11,17 +11,17 @@ import { TryIt } from "@/components/home/try-it"
 
 const STEPS = [
   {
-    icon: KeyboardIcon,
+    icon: Command,
     title: "Learn by doing",
     text: "Every lesson drops you into a real, working editor. You start pressing keys right away.",
   },
   {
-    icon: RepeatIcon,
+    icon: Refresh,
     title: "Build muscle memory",
     text: "Challenges are generated fresh every time, so you can repeat them until the moves feel automatic. Each command levels up as you go.",
   },
   {
-    icon: LayersIcon,
+    icon: Layers,
     title: "Structured from zero",
     text: "A curriculum that builds step by step, from the first keystroke to advanced techniques. You don't need any setup or prior experience.",
   },
@@ -43,7 +43,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/learn/vim" className={buttonVariants({ size: "lg" })}>
-              Start learning Vim <ArrowRightIcon />
+              Start learning Vim <ArrowRight />
             </Link>
             <Link href="/tracks" className={buttonVariants({ size: "lg", variant: "outline" })}>
               Browse tracks
@@ -88,7 +88,7 @@ export default function Home() {
               <Card key={t.slug}>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <BrainCircuitIcon className="size-5 text-primary" /> {t.title}
+                    <Microchip className="size-5 text-primary" /> {t.title}
                   </CardTitle>
                   <CardDescription>{t.description}</CardDescription>
                 </CardHeader>
@@ -99,7 +99,7 @@ export default function Home() {
                 </CardContent>
                 <CardFooter>
                   <Link href={`/learn/${t.slug}`} className={buttonVariants({ variant: "secondary" })}>
-                    Start {t.title} <ArrowRightIcon />
+                    Start {t.title} <ArrowRight />
                   </Link>
                 </CardFooter>
               </Card>

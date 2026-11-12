@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ListIcon } from "lucide-react"
+import { List } from "@meteor-icons/react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { LessonSidebar } from "./lesson-sidebar"
@@ -12,7 +12,7 @@ export function MobileLessonNav({ trackSlug }: { trackSlug: string }) {
     <div className="border-b px-4 py-2 lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger render={<Button variant="outline" size="sm" />}>
-          <ListIcon /> Lessons
+          <List /> Lessons
         </SheetTrigger>
         <SheetContent side="left" className="w-80 overflow-y-auto p-0">
           <SheetHeader>

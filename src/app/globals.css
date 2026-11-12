@@ -5,6 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Code surfaces (Dracula), see DESIGN.md R3 */
+  --color-code-bg: var(--code-bg);
+  --color-code-bar: var(--code-bar);
+  --color-code-line: var(--code-line);
+  --color-code-selection: var(--code-selection);
+  --color-code-fg: var(--code-fg);
+  --color-code-gutter: var(--code-gutter);
+  --color-code-comment: var(--code-comment);
+  --color-code-keyword: var(--code-keyword);
+  --color-code-string: var(--code-string);
+  --color-code-number: var(--code-number);
+  --color-code-function: var(--code-function);
+  --color-code-type: var(--code-type);
+  --color-code-param: var(--code-param);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -49,6 +63,20 @@
 }
 
 :root {
+  /* Dracula palette: code surfaces stay dark in both light and dark themes */
+  --code-bg: #282a36;
+  --code-bar: #21222c;
+  --code-line: #44475a;
+  --code-selection: #44475a;
+  --code-fg: #f8f8f2;
+  --code-gutter: #6272a4;
+  --code-comment: #6272a4;
+  --code-keyword: #ff79c6;
+  --code-string: #f1fa8c;
+  --code-number: #bd93f9;
+  --code-function: #50fa7b;
+  --code-type: #8be9fd;
+  --code-param: #ffb86c;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

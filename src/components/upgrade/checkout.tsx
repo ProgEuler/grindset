@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { CheckIcon, CrownIcon } from "lucide-react"
+import { Check, Star } from "@meteor-icons/react"
 import { toast } from "sonner"
 import { PRO_PLAN } from "@/lib/config"
 import { useApp, useHydrated } from "@/lib/store"
@@ -28,7 +28,7 @@ export function Checkout() {
     return (
       <div className="space-y-2 text-center">
         <p className="flex items-center justify-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
-          <CheckIcon className="size-4" /> You have Pro. Thanks for the support!
+          <Check className="size-4" /> You have Pro. Thanks for the support!
         </p>
         <Link href="/learn/vim/delete-words" className={cn(buttonVariants(), "w-full")}>
           Continue to Pro lessons
@@ -39,7 +39,7 @@ export function Checkout() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={<Button className="w-full bg-amber-500 text-black hover:bg-amber-400" size="lg" />}>
-        <CrownIcon /> Get lifetime access: ${PRO_PLAN.price}
+        <Star /> Get lifetime access: ${PRO_PLAN.price}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

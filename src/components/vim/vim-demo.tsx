@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { PlayIcon, RotateCcwIcon } from "lucide-react"
+import { Play, Rotate } from "@meteor-icons/react"
 import { createState, handleKey, type VimState } from "@/lib/vim/engine"
 import type { VimDemo as Demo } from "@/lib/tracks/types"
 import { Button } from "@/components/ui/button"
@@ -39,7 +39,7 @@ export function VimDemo({ demo, caption, compact }: { demo: Demo; caption?: stri
       <VimEditor state={frames[i].state} maxLines={compact ? 6 : 10} />
       <div className="flex min-h-8 flex-wrap items-center gap-2">
         <Button size="sm" variant="secondary" onClick={play}>
-          {i > 0 && !playing ? <RotateCcwIcon /> : <PlayIcon />}
+          {i > 0 && !playing ? <Rotate /> : <Play />}
           {i > 0 && !playing ? "Replay" : "Play example"}
         </Button>
         <span className="flex flex-wrap gap-1">

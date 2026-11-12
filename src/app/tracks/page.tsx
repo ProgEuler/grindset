@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRightIcon } from "lucide-react"
+import { ArrowRight } from "@meteor-icons/react"
 import { TRACKS, lessonCount } from "@/lib/tracks"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -34,7 +34,7 @@ export default function TracksPage() {
               </CardContent>
               <CardFooter className="gap-2">
                 <Link href={`/learn/${t.slug}`} className={buttonVariants()}>
-                  Lessons <ArrowRightIcon />
+                  Lessons <ArrowRight />
                 </Link>
                 <Link href={`/practice/${t.slug}`} className={buttonVariants({ variant: "outline" })}>
                   Practice

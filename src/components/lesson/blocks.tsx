@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { InfoIcon } from "lucide-react"
+import { CircleInfo } from "@meteor-icons/react"
 import type { Block } from "@/lib/tracks/types"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
+import { CodeBlock } from "@/components/code-block"
 import { KeyList } from "@/components/key-badge"
 import { RichText } from "@/components/rich-text"
 import { VimDemo } from "@/components/vim/vim-demo"
@@ -40,11 +41,12 @@ function BlockView({ block }: { block: Block }) {
         </ul>
       )
     case "code":
-      return <pre className="overflow-auto rounded-lg border bg-muted/40 p-4 font-mono text-sm leading-6">{block.text}</pre>
+      return <CodeBlock lines={block.text.split("\n")} lineNumbers={false} />
+
     case "callout":
       return (
         <Alert>
-          <InfoIcon />
+          <CircleInfo />
           {block.title && <AlertTitle>{block.title}</AlertTitle>}
           <AlertDescription>
             <RichText text={block.text} />

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { CheckIcon, LockIcon } from "lucide-react"
+import { Check, Lock } from "@meteor-icons/react"
 import type { Track } from "@/lib/tracks/types"
 import { getTrack } from "@/lib/tracks"
 import { useApp, useHydrated, useTrackProgress } from "@/lib/store"
@@ -38,9 +38,9 @@ export function LessonSidebar({ trackSlug, onNavigate }: { trackSlug: string; on
                   >
                     <span className="flex size-4 shrink-0 items-center justify-center">
                       {done ? (
-                        <CheckIcon className="size-4 text-emerald-500" />
+                        <Check className="size-4 text-emerald-500" />
                       ) : locked ? (
-                        <LockIcon className="size-3.5 text-muted-foreground" />
+                        <Lock className="size-3.5 text-muted-foreground" />
                       ) : null}
                     </span>
                     <span className={cn("flex-1 truncate", locked && "text-muted-foreground")}>{l.title}</span>

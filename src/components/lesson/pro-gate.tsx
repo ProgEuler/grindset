@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CrownIcon, LockIcon } from "lucide-react"
+import { Star, Lock } from "@meteor-icons/react"
 import { PRO_PLAN } from "@/lib/config"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -10,7 +10,7 @@ export function ProGate({ title = "This lesson is part of Pro" }: { title?: stri
     <Card className="border-amber-500/40 bg-amber-500/5">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <LockIcon className="size-4 text-amber-500" /> {title}
+          <Lock className="size-4 text-amber-500" /> {title}
         </CardTitle>
         <CardDescription>
           Unlock interactive challenges for every lesson, all practice categories and future tracks. ${PRO_PLAN.price}, paid {PRO_PLAN.period}.
@@ -18,7 +18,7 @@ export function ProGate({ title = "This lesson is part of Pro" }: { title?: stri
       </CardHeader>
       <CardContent>
         <Link href="/upgrade?source=lesson" className={cn(buttonVariants(), "bg-amber-500 text-black hover:bg-amber-400")}>
-          <CrownIcon /> Upgrade to Pro
+          <Star /> Upgrade to Pro
         </Link>
       </CardContent>
     </Card>

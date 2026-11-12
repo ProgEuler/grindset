@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { keyFromEvent, selection, toOffset, type Pos, type VimState } from "@/lib/vim/engine"
+import { TOKEN_CLASS, tokenize } from "@/lib/syntax"
 import { cn } from "@/lib/utils"
 
 interface VimEditorProps {
@@ -59,6 +60,7 @@ export function VimEditor({
     else if (bottom > box.scrollTop + box.clientHeight - 8) box.scrollTop = bottom - box.clientHeight + 24
   }, [state.cursor.line, state.lines])
 
+  const tokens = useMemo(() => tokenize(state.lines), [state.lines])
   const sel = selection(state)
   const selStart = sel && !sel.linewise ? sel.s : -1
   const selEnd = sel && !sel.linewise ? sel.e : -1
@@ -91,7 +93,7 @@ export function VimEditor({
         }
       }}
       className={cn(
-        "relative overflow-hidden rounded-xl border bg-card font-mono text-[13px] leading-6 outline-none transition-shadow",
+        "relative overflow-hidden rounded-xl border border-code-line bg-code-bg font-mono text-[13px] leading-6 text-code-fg outline-none transition-shadow",
         interactive && focused && "ring-2 ring-ring/60",
         flash === "success" && "ring-2 ring-emerald-500",
         className
@@ -110,13 +112,13 @@ export function VimEditor({
             <div
               key={li}
               data-line={li}
-              className={cn("flex whitespace-pre pr-4", isCursorLine && interactive && "bg-muted/40", changedLines?.has(li) && "bg-rose-500/10")}
+              className={cn("flex whitespace-pre pr-4", isCursorLine && interactive && "bg-code-line/40", changedLines?.has(li) && "bg-rose-500/10")}
             >
               <span
                 className={cn(
-                  "sticky left-0 z-10 shrink-0 select-none bg-card pr-3 pl-3 text-right text-muted-foreground/60",
-                  isCursorLine && "text-foreground",
-                  changedLines?.has(li) && "text-rose-500"
+                  "sticky left-0 z-10 shrink-0 select-none bg-code-bg pr-3 pl-3 text-right text-code-gutter",
+                  isCursorLine && "text-code-fg",
+                  changedLines?.has(li) && "text-rose-400"
                 )}
                 style={{ width: `${gutterWidth + 2.5}ch` }}
               >
@@ -134,11 +136,12 @@ export function VimEditor({
                       key={ci}
                       className={cn(
                         "relative",
-                        isSel && "bg-sky-500/30",
+                        TOKEN_CLASS[tokens[li]?.[ci] ?? "plain"],
+                        isSel && "bg-code-selection",
                         isTarget && "rounded-[2px] bg-emerald-500/30 outline-2 outline-emerald-500",
-                        isCursor && !insertLike && (focused || !interactive) && "bg-foreground text-background",
-                        isCursor && !insertLike && interactive && !focused && "outline-1 outline-foreground/70",
-                        isCursor && insertLike && "shadow-[inset_2px_0_0_0_var(--color-foreground)]"
+                        isCursor && !insertLike && (focused || !interactive) && "bg-code-fg text-code-bg not-italic",
+                        isCursor && !insertLike && interactive && !focused && "outline-1 outline-code-fg/70",
+                        isCursor && insertLike && "shadow-[inset_2px_0_0_0_var(--code-fg)]"
                       )}
                     >
                       {ch}
@@ -151,28 +154,28 @@ export function VimEditor({
         })}
       </div>
 
-      <div className="flex h-7 items-center gap-2 border-t bg-muted/40 px-2 text-[11px]">
+      <div className="flex h-7 items-center gap-2 border-t border-code-line bg-code-bar px-2 text-[11px] text-code-gutter">
         <span
           className={cn(
             "rounded px-1.5 py-0.5 font-semibold tracking-wide",
-            state.mode === "normal" && "bg-primary/15 text-primary",
-            state.mode === "insert" && "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-            (state.mode === "visual" || state.mode === "visual-line") && "bg-sky-500/20 text-sky-600 dark:text-sky-400",
-            state.mode === "search" && "bg-amber-500/20 text-amber-600 dark:text-amber-400"
+            state.mode === "normal" && "bg-code-number text-code-bg",
+            state.mode === "insert" && "bg-code-function text-code-bg",
+            (state.mode === "visual" || state.mode === "visual-line") && "bg-code-param text-code-bg",
+            state.mode === "search" && "bg-code-string text-code-bg"
           )}
         >
           {MODE_LABEL[state.mode]}
         </span>
         {state.mode === "search" && state.search && (
-          <span className="text-foreground">
+          <span className="text-code-fg">
             {state.search.forward ? "/" : "?"}
             {state.search.input}
-            <span className="ml-px inline-block h-3 w-[2px] translate-y-0.5 animate-pulse bg-foreground" />
+            <span className="ml-px inline-block h-3 w-[2px] translate-y-0.5 animate-pulse bg-code-fg" />
           </span>
         )}
-        {state.pending.length > 0 && <span className="text-muted-foreground">{state.pending.join("")}</span>}
-        {state.message && <span className="truncate text-muted-foreground">{state.message}</span>}
-        <span className="ml-auto flex items-center gap-3 text-muted-foreground">
+        {state.pending.length > 0 && <span className="text-code-fg">{state.pending.join("")}</span>}
+        {state.message && <span className="truncate">{state.message}</span>}
+        <span className="ml-auto flex items-center gap-3">
           {statusRight}
           <span>
             {state.cursor.line + 1}:{state.cursor.col + 1}
@@ -183,13 +186,13 @@ export function VimEditor({
       {interactive && !focused && (
         <button
           type="button"
-          className="absolute inset-0 z-20 flex items-center justify-center bg-background/40 text-sm text-muted-foreground backdrop-blur-[1px]"
+          className="absolute inset-0 z-20 flex items-center justify-center bg-code-bg/50 text-sm text-code-fg backdrop-blur-[1px]"
           onMouseDown={(e) => {
             e.preventDefault()
             ref.current?.focus({ preventScroll: true })
           }}
         >
-          <span className="rounded-md border bg-card px-3 py-1.5 shadow-sm">Click to focus the editor</span>
+          <span className="rounded-md border border-code-line bg-code-bar px-3 py-1.5 shadow-sm">Click to focus the editor</span>
         </button>
       )}
     </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { CheckIcon, LockIcon } from "lucide-react"
+import { Check, Lock } from "@meteor-icons/react"
 import { TRACKS, lessonCount } from "@/lib/tracks"
 import { PRO_PLAN } from "@/lib/config"
 import { Badge } from "@/components/ui/badge"
@@ -61,7 +61,7 @@ export default function UpgradePage() {
             <ul className="space-y-2 text-sm">
               {PRO_PLAN.features.map((f) => (
                 <li key={f} className="flex gap-2">
-                  <CheckIcon className="size-4 shrink-0 text-emerald-500" /> {f}
+                  <Check className="size-4 shrink-0 text-emerald-500" /> {f}
                 </li>
               ))}
             </ul>
@@ -86,7 +86,7 @@ export default function UpgradePage() {
                 .filter((l) => l.pro)
                 .map((l) => (
                   <Link key={l.slug} href={`/learn/${t.slug}/${l.slug}`} className="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-muted">
-                    <LockIcon className="size-3 text-muted-foreground" />
+                    <Lock className="size-3 text-muted-foreground" />
                     <span className="flex-1">{l.title}</span>
                     <KeyList keys={l.keys} />
                   </Link>

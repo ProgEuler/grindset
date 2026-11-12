@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check } from "@meteor-icons/react"
 import { toast } from "sonner"
 import { findLesson, getTrack, knownCommands } from "@/lib/tracks"
 import type { Track } from "@/lib/tracks/types"
@@ -72,7 +72,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
 
   const nextLink = next && (
     <Link href={`/learn/${track.slug}/${next.slug}`} className={buttonVariants()}>
-      Next: {next.title} <ArrowRightIcon />
+      Next: {next.title} <ArrowRight />
     </Link>
   )
 
@@ -92,7 +92,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
           )}
           {hydrated && lp?.completed && (
             <Badge variant="secondary" className="gap-1">
-              <CheckIcon className="size-3" /> completed
+              <Check className="size-3" /> completed
             </Badge>
           )}
         </div>
@@ -161,7 +161,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
                           toast.success("Marked as complete")
                         }}
                       >
-                        <CheckIcon /> {lp?.completed ? "Completed" : "Mark as complete"}
+                        <Check /> {lp?.completed ? "Completed" : "Mark as complete"}
                       </Button>
                       {nextLink}
                     </div>
@@ -194,7 +194,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
         {prev ? (
           <Link href={`/learn/${track.slug}/${prev.slug}`} className="rounded-lg border p-3 hover:bg-muted">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <ArrowLeftIcon className="size-3" /> Back <KeyBadge k="Ctrl+k" className="ml-1 h-5 text-[10px]" />
+              <ArrowLeft className="size-3" /> Back <KeyBadge k="Ctrl+k" className="ml-1 h-5 text-[10px]" />
             </div>
             <div className="mt-1 font-medium">{prev.title}</div>
           </Link>
@@ -204,7 +204,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
         {next && (
           <Link href={`/learn/${track.slug}/${next.slug}`} className="rounded-lg border p-3 text-right hover:bg-muted">
             <div className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
-              <KeyBadge k="Ctrl+j" className="mr-1 h-5 text-[10px]" /> Next <ArrowRightIcon className="size-3" />
+              <KeyBadge k="Ctrl+j" className="mr-1 h-5 text-[10px]" /> Next <ArrowRight className="size-3" />
             </div>
             <div className="mt-1 font-medium">{next.title}</div>
           </Link>

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { LockIcon } from "lucide-react"
+import { Lock } from "@meteor-icons/react"
 import { getTrack, allLessons } from "@/lib/tracks"
 import type { QuizQuestion, Track } from "@/lib/tracks/types"
 import { mix, type Ctx, type VimRound } from "@/lib/vim/generators"
@@ -73,7 +73,7 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
             const locked = c.pro && !(hydrated && pro)
             return (
               <ToggleGroupItem key={c.id} value={c.id} disabled={locked} aria-label={c.label}>
-                {locked && <LockIcon />} {c.label}
+                {locked && <Lock />} {c.label}
               </ToggleGroupItem>
             )
           })}
@@ -91,7 +91,7 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
         >
           {(["goals", "time", "endless"] as Mode[]).map((m) => (
             <ToggleGroupItem key={m} value={m} disabled={m !== "goals" && !(hydrated && pro)}>
-              {m !== "goals" && !(hydrated && pro) && <LockIcon />} {m}
+              {m !== "goals" && !(hydrated && pro) && <Lock />} {m}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>

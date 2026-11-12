@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { EyeIcon, RotateCcwIcon, SkipForwardIcon, TrophyIcon } from "lucide-react"
+import { Eye, Rotate, ForwardStep, BadgeCheck } from "@meteor-icons/react"
 import { createState, handleKey, type VimState } from "@/lib/vim/engine"
 import { makeRng, type Ctx, type Rng, type VimRound } from "@/lib/vim/generators"
 import { useApp } from "@/lib/store"
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { KeyList } from "@/components/key-badge"
+import { CodeBlock } from "@/components/code-block"
 import { VimEditor } from "./vim-editor"
 import { lineDiff } from "./diff"
 
@@ -190,7 +191,7 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrophyIcon className="size-5 text-amber-500" /> Challenge complete
+            <BadgeCheck className="size-5 text-amber-500" /> Challenge complete
           </CardTitle>
           <CardDescription>
             {run.index} rounds in {formatTime(elapsed)}
@@ -204,7 +205,7 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
         </CardContent>
         <CardFooter className="gap-2">
           <Button onClick={restart} variant="secondary">
-            <RotateCcwIcon /> Try again
+            <Rotate /> Try again
           </Button>
           {doneActions}
         </CardFooter>
@@ -237,14 +238,14 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
         <span className="ml-auto flex gap-1">
           {showHints && round && (
             <Button size="xs" variant="ghost" onClick={() => setRun({ ...run, revealed: true })} disabled={run.revealed}>
-              <EyeIcon /> Solution
+              <Eye /> Solution
             </Button>
           )}
           <Button size="xs" variant="ghost" onClick={skip}>
-            <SkipForwardIcon /> Skip
+            <ForwardStep /> Skip
           </Button>
           <Button size="xs" variant="ghost" onClick={restart}>
-            <RotateCcwIcon /> Restart
+            <Rotate /> Restart
           </Button>
         </span>
       </div>
@@ -272,19 +273,12 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
       )}
 
       {round?.kind === "edit" && round.goal && (
-        <div className="rounded-xl border border-dashed bg-muted/20">
-          <div className="flex items-center justify-between border-b border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <div className="overflow-hidden rounded-xl border border-dashed border-code-line bg-code-bg">
+          <div className="flex items-center justify-between border-b border-dashed border-code-line bg-code-bar px-3 py-1.5 text-xs text-code-gutter">
             <span>Goal: make the buffer look like this{run.vim?.mode === "insert" ? ", then press Esc" : ""}</span>
             {round.hint && <span className="hidden sm:inline">{round.hint}</span>}
           </div>
-          <pre className="overflow-auto py-2 font-mono text-[13px] leading-6">
-            {round.goal.map((l, i) => (
-              <div key={i} className={cn("flex pr-4", diff?.bOnly.has(i) && "bg-emerald-500/15")}>
-                <span className="w-10 shrink-0 pr-3 text-right text-muted-foreground/60 select-none">{i + 1}</span>
-                <span className="whitespace-pre">{l || " "}</span>
-              </div>
-            ))}
-          </pre>
+          <CodeBlock lines={round.goal} highlightLines={diff?.bOnly} className="rounded-none" />
         </div>
       )}
     </div>
