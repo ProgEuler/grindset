@@ -8,7 +8,7 @@ export function KeyBadge({ k, className }: { k: string; className?: string }) {
         className
       )}
     >
-      {k === "Escape" ? "Esc" : k === "Enter" ? "↵" : k}
+      {k === "Escape" ? "Esc" : k === "Enter" ? "↵" : k === "Backspace" ? "⌫" : k === " " ? "␣" : k}
     </kbd>
   )
 }

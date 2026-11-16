@@ -36,6 +36,22 @@ export interface RoundRecord {
   ideal: number
 }
 
+export type SavedKind = "lesson" | "command" | "move" | "note"
+
+/** A bookmarked command/lesson/pro move, or a learning the user wrote, filed under a course (track). */
+export interface SavedItem {
+  id: string
+  kind: SavedKind
+  title: string
+  keys?: string[]
+  detail?: string
+  href?: string
+  note?: string
+  createdAt: string
+}
+
+export type SaveInput = Omit<SavedItem, "createdAt" | "note">
+
 interface AppState {
   user: { name: string; email: string } | null
   pro: boolean
@@ -43,6 +59,13 @@ interface AppState {
   tracks: Record<string, TrackProgress>
   /** YYYY-MM-DD -> rounds completed that day */
   activity: Record<string, number>
+  /** course (track slug) -> saved items, newest first */
+  saved: Record<string, SavedItem[]>
+
+  toggleSaved: (track: string, item: SaveInput) => boolean
+  addLearning: (track: string, l: { title: string; note: string; keys?: string[] }) => void
+  updateSavedNote: (track: string, id: string, note: string) => void
+  removeSaved: (track: string, id: string) => void
 
   signIn: (user: { name: string; email: string }) => void
   signOut: () => void
@@ -65,6 +88,35 @@ export const useApp = create<AppState>()(
       user: null,
       pro: false,
       settings: { relativeNumbers: false, showHints: true },
+      saved: {},
+
+      toggleSaved: (track, item) => {
+        const list = get().saved[track] ?? []
+        const exists = list.some((s) => s.id === item.id)
+        const next = exists ? list.filter((s) => s.id !== item.id) : [{ ...item, createdAt: new Date().toISOString() }, ...list]
+        set({ saved: { ...get().saved, [track]: next } })
+        return !exists
+      },
+      addLearning: (track, l) => {
+        const list = get().saved[track] ?? []
+        const item: SavedItem = {
+          id: `note:${Date.now()}`,
+          kind: "note",
+          title: l.title,
+          note: l.note,
+          keys: l.keys?.length ? l.keys : undefined,
+          createdAt: new Date().toISOString(),
+        }
+        set({ saved: { ...get().saved, [track]: [item, ...list] } })
+      },
+      updateSavedNote: (track, id, note) => {
+        const list = get().saved[track] ?? []
+        set({ saved: { ...get().saved, [track]: list.map((s) => (s.id === id ? { ...s, note } : s)) } })
+      },
+      removeSaved: (track, id) => {
+        const list = get().saved[track] ?? []
+        set({ saved: { ...get().saved, [track]: list.filter((s) => s.id !== id) } })
+      },
       tracks: {},
       activity: {},
 
@@ -132,6 +184,11 @@ const subscribeHydration = (cb: () => void) => useApp.persist.onFinishHydration(
 /** true once localStorage state has been loaded on the client */
 export function useHydrated() {
   return useSyncExternalStore(subscribeHydration, () => useApp.persist.hasHydrated(), () => false)
+}
+
+const NO_SAVED: SavedItem[] = []
+export function useSaved(track: string): SavedItem[] {
+  return useApp((s) => s.saved[track]) ?? NO_SAVED
 }
 
 export function useTrackProgress(track: string): TrackProgress {

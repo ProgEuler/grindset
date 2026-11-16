@@ -49,6 +49,9 @@ Icon vocabulary (use the same icon for the same meaning everywhere):
 | Lessons | `BookOpen` |
 | Practice | `Fire` |
 | Stats | `TrendingUp` |
+| Playground (free editor) | `Terminal` |
+| Pro moves / recap | `Sparkles` |
+| Load your own file | `File` |
 | Pro / upgrade | `Star` |
 | Completed / correct | `Check`, `CircleCheck` |
 | Challenge complete | `BadgeCheck` |

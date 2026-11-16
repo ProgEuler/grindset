@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { TrendingUp, BookOpen, Star, Fire, Power, Moon, Gear, Sun, User, Bolt } from "@meteor-icons/react"
+import { TrendingUp, BookOpen, Star, Fire, Power, Moon, Gear, Sun, User, Bolt, Terminal, Sparkles } from "@meteor-icons/react"
 import { TRACKS, getTrack } from "@/lib/tracks"
 import { SITE } from "@/lib/config"
 import { useApp, useHydrated } from "@/lib/store"
@@ -39,6 +39,12 @@ export function SiteHeader() {
     { href: `/learn/${track.slug}${lastLesson ? `/${lastLesson}` : ""}`, match: "/learn", label: "Lessons", icon: BookOpen },
     { href: `/practice/${track.slug}`, match: "/practice", label: "Practice", icon: Fire },
     { href: `/stats?track=${track.slug}`, match: "/stats", label: "Stats", icon: TrendingUp },
+    ...(track.engine === "vim"
+      ? [
+          { href: "/playground", match: "/playground", label: "Playground", icon: Terminal },
+          { href: "/recap", match: "/recap", label: "Pro moves", icon: Sparkles },
+        ]
+      : []),
   ]
 
   return (
