@@ -19,7 +19,7 @@ import { VimChallenge, formatTime, type ChallengeSummary } from "@/components/vi
 import { VimPlayground } from "@/components/vim/vim-playground"
 import { QuizChallenge } from "@/components/quiz/quiz-challenge"
 import { LessonBlocks } from "./blocks"
-import { ProGate } from "./pro-gate"
+import { SaveButton } from "@/components/save-button"
 
 export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lessonSlug: string }) {
   const track = getTrack(trackSlug) as Track
@@ -27,14 +27,12 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
   const { lesson, section, prev, next, index } = found
   const router = useRouter()
   const hydrated = useHydrated()
-  const pro = useApp((s) => s.pro)
   const settings = useApp((s) => s.settings)
   const visitLesson = useApp((s) => s.visitLesson)
   const completeLesson = useApp((s) => s.completeLesson)
   const markLessonDone = useApp((s) => s.markLessonDone)
   const progress = useTrackProgress(track.slug)
   const lp = progress.lessons[lesson.slug]
-  const locked = lesson.pro && !pro
   const known = useMemo(() => knownCommands(track, lesson.slug), [track, lesson.slug])
   const rounds = lesson.challenge?.rounds ?? 0
   const goal = useMemo(() => ({ type: "rounds" as const, n: rounds }), [rounds])
@@ -85,11 +83,6 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
           <span>{section.title}</span>
           <span>·</span>
           <span>Lesson {index + 1}</span>
-          {lesson.pro && (
-            <Badge variant="outline" className="border-amber-500/50 text-amber-600 dark:text-amber-400">
-              Pro
-            </Badge>
-          )}
           {hydrated && lp?.completed && (
             <Badge variant="secondary" className="gap-1">
               <Check className="size-3" /> completed
@@ -97,22 +90,28 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
           )}
         </div>
         <h1 className="text-3xl font-bold tracking-tight">{lesson.title}</h1>
-        <KeyList keys={lesson.keys} />
+        <div className="flex flex-wrap items-center gap-3">
+          <KeyList keys={lesson.keys} />
+          <SaveButton
+            label
+            track={track.slug}
+            item={{
+              id: `lesson:${lesson.slug}`,
+              kind: "lesson",
+              title: lesson.title,
+              keys: lesson.keys,
+              detail: section.title,
+              href: `/learn/${track.slug}/${lesson.slug}`,
+            }}
+          />
+        </div>
       </header>
 
-      {!hydrated && lesson.pro ? (
-        <div className="h-64 animate-pulse rounded-xl bg-muted/40" />
-      ) : locked ? (
-        <div className="space-y-6">
-          <div className="relative max-h-56 overflow-hidden">
-            <LessonBlocks blocks={lesson.blocks.slice(0, 2)} />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background" />
-          </div>
-          <ProGate />
-        </div>
-      ) : (
-        <>
-          <LessonBlocks blocks={lesson.blocks} />
+      <>
+          <LessonBlocks
+            blocks={lesson.blocks}
+            source={{ track: track.slug, lessonTitle: lesson.title, href: `/learn/${track.slug}/${lesson.slug}` }}
+          />
 
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">{ch ? "Now it's your turn" : "Try it out"}</h2>
@@ -186,8 +185,7 @@ export function LessonView({ trackSlug, lessonSlug }: { trackSlug: string; lesso
               ))}
             </section>
           )}
-        </>
-      )}
+      </>
 
       <Separator />
       <nav className="grid grid-cols-2 gap-3">

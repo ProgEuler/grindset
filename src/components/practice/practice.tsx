@@ -1,12 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
-import { Lock } from "@meteor-icons/react"
 import { getTrack, allLessons } from "@/lib/tracks"
 import type { QuizQuestion, Track } from "@/lib/tracks/types"
 import { mix, type Ctx, type VimRound } from "@/lib/vim/generators"
-import { useApp, useHydrated } from "@/lib/store"
+import { useApp } from "@/lib/store"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Separator } from "@/components/ui/separator"
 import { VimChallenge, type ChallengeGoal } from "@/components/vim/vim-challenge"
@@ -17,8 +15,6 @@ const AMOUNTS: Record<Mode, number[]> = { goals: [5, 15, 30, 50], time: [15, 30,
 
 export function Practice({ trackSlug }: { trackSlug: string }) {
   const track = getTrack(trackSlug) as Track
-  const hydrated = useHydrated()
-  const pro = useApp((s) => s.pro)
   const relativeNumbers = useApp((s) => s.settings.relativeNumbers)
   const [cats, setCats] = useState<string[]>([track.practice[0].id])
   const [mode, setMode] = useState<Mode>("goals")
@@ -26,15 +22,15 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
 
   const allowed = (id: string) => {
     const c = track.practice.find((p) => p.id === id)
-    return !!c && (!c.pro || (hydrated && pro))
+    return !!c
   }
   const active = cats.filter(allowed)
   const activeKey = active.join(",")
   const lessons = useMemo(() => {
     const ids = activeKey.split(",")
     const slugs = new Set(track.practice.filter((p) => ids.includes(p.id)).flatMap((p) => p.lessons))
-    return allLessons(track).filter((l) => slugs.has(l.slug) && (!l.pro || pro))
-  }, [track, activeKey, pro])
+    return allLessons(track).filter((l) => slugs.has(l.slug))
+  }, [track, activeKey])
 
   const known = useMemo(() => new Set(track.commands.map((c) => c.id)), [track])
   const vimGen = useMemo(() => {
@@ -70,10 +66,9 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
           size="sm"
         >
           {track.practice.map((c) => {
-            const locked = c.pro && !(hydrated && pro)
             return (
-              <ToggleGroupItem key={c.id} value={c.id} disabled={locked} aria-label={c.label}>
-                {locked && <Lock />} {c.label}
+              <ToggleGroupItem key={c.id} value={c.id} aria-label={c.label}>
+                {c.label}
               </ToggleGroupItem>
             )
           })}
@@ -90,8 +85,8 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
           size="sm"
         >
           {(["goals", "time", "endless"] as Mode[]).map((m) => (
-            <ToggleGroupItem key={m} value={m} disabled={m !== "goals" && !(hydrated && pro)}>
-              {m !== "goals" && !(hydrated && pro) && <Lock />} {m}
+            <ToggleGroupItem key={m} value={m}>
+              {m}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -110,15 +105,6 @@ export function Practice({ trackSlug }: { trackSlug: string }) {
         )}
       </div>
 
-      {!(hydrated && pro) && (
-        <p className="text-xs text-muted-foreground">
-          Timed and endless modes, plus the editing, text object and visual categories, come with{" "}
-          <Link href="/upgrade?source=practice" className="text-primary underline">
-            Pro
-          </Link>
-          .
-        </p>
-      )}
 
       {track.engine === "vim" && vimGen && (
         <VimChallenge key={runKey} track={track.slug} generate={vimGen} known={known} goal={goal} relativeNumbers={relativeNumbers} autoFocus />

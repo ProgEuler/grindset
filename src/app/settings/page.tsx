@@ -13,7 +13,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 export default function SettingsPage() {
   const hydrated = useHydrated()
-  const { settings, updateSettings, pro, setPro, resetProgress, user } = useApp()
+  const { settings, updateSettings, resetProgress, user } = useApp()
   const { theme, setTheme } = useTheme()
   const [open, setOpen] = useState(false)
 
@@ -47,12 +47,9 @@ export default function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Account</CardTitle>
-          <CardDescription>{user ? `Signed in as ${user.name}` : "Not signed in"} · Plan: {pro ? "Pro (lifetime)" : "Free"}</CardDescription>
+          <CardDescription>{user ? `Signed in as ${user.name}` : "Not signed in"}. Everything on Grindset is free.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Row label="Pro access (dev toggle)" hint="Stand-in for a real billing check.">
-            <Switch checked={pro} onCheckedChange={setPro} />
-          </Row>
           <Row label="Reset progress" hint="Clears lesson completion, XP and activity for all tracks.">
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger render={<Button variant="destructive" size="sm" />}>Reset</DialogTrigger>

@@ -41,7 +41,6 @@ const basics: Section = {
       slug: "intro-to-modes",
       title: "Intro to Modes",
       keys: ["modes"],
-      pro: false,
       introduces: [],
       blocks: [
         p("The first idea to get comfortable with is **modes**. The same key does different things depending on which mode you are in."),
@@ -63,7 +62,6 @@ const basics: Section = {
       slug: "basic-movement",
       title: "Basic Movement",
       keys: ["h", "j", "k", "l"],
-      pro: false,
       introduces: ["h", "j", "k", "l"],
       blocks: [
         p("In normal mode the four keys under your right hand move the cursor one step at a time."),
@@ -85,7 +83,6 @@ const basics: Section = {
       slug: "word-motions",
       title: "Moving by Words",
       keys: ["w", "e", "b"],
-      pro: false,
       introduces: ["w", "e", "b"],
       blocks: [
         p("Moving one character at a time gets tedious. Word motions jump through the text one word at a time."),
@@ -102,7 +99,6 @@ const basics: Section = {
       slug: "insert-mode",
       title: "Insert Mode",
       keys: ["i", "a", "Esc"],
-      pro: false,
       introduces: ["i", "a", "Escape"],
       blocks: [
         p("There are two everyday ways to start typing. The only difference is where the text goes."),
@@ -126,7 +122,6 @@ const insertPro: Section = {
       slug: "uppercase-commands",
       title: "Uppercase Commands",
       keys: ["shift"],
-      pro: false,
       introduces: [],
       blocks: [
         p("Vim has a habit: the **uppercase** version of a command is usually a bigger, stronger, or reversed version of the lowercase one."),
@@ -139,7 +134,6 @@ const insertPro: Section = {
       slug: "insert-at-line-ends",
       title: "Insert at Line Ends",
       keys: ["I", "A", "Esc"],
-      pro: false,
       introduces: ["I", "A"],
       blocks: [
         p("Two of the most common edits are adding something to the start or the end of a line. These commands do it from anywhere on the line."),
@@ -154,7 +148,6 @@ const insertPro: Section = {
       slug: "open-lines",
       title: "Opening New Lines",
       keys: ["o", "O"],
-      pro: false,
       introduces: ["o", "O"],
       blocks: [
         p("To add a new line you don't need to go to the end of a line and press Enter."),
@@ -170,7 +163,6 @@ const insertPro: Section = {
       slug: "small-edits",
       title: "Making Small Edits",
       keys: ["s", "x", "r"],
-      pro: false,
       introduces: ["x", "r", "s"],
       blocks: [
         p("Three tiny commands for fixing typos."),
@@ -193,7 +185,6 @@ const motions: Section = {
       slug: "big-word-motions",
       title: "Moving by WORDs",
       keys: ["W", "E", "B"],
-      pro: false,
       introduces: ["W", "E", "B"],
       blocks: [
         p("A **WORD** (uppercase) is anything between spaces. Punctuation doesn't split it. That makes WORD motions much faster on code full of dots, brackets and quotes."),
@@ -210,7 +201,6 @@ const motions: Section = {
       slug: "line-ends",
       title: "Moving to Line Ends",
       keys: ["0", "_", "$"],
-      pro: false,
       introduces: ["0", "_", "$"],
       blocks: [
         keys(
@@ -226,7 +216,6 @@ const motions: Section = {
       slug: "find-char",
       title: "Find Character",
       keys: ["f", "F", ";"],
-      pro: false,
       introduces: ["f", "F", ";", ","],
       blocks: [
         p("To get to a specific character on the line, find it."),
@@ -242,7 +231,6 @@ const motions: Section = {
       slug: "till-char",
       title: "Till Character",
       keys: ["t", "T", ";"],
-      pro: false,
       introduces: ["t", "T"],
       blocks: [
         p("`t` (till) works like `f` but stops one character **before** the match. It really pays off with operators later, for example `dt)` deletes up to a closing paren."),
@@ -263,7 +251,6 @@ const operators: Section = {
       slug: "intro-to-operators",
       title: "Intro to Operators",
       keys: ["operators"],
-      pro: false,
       introduces: [],
       blocks: [
         p("Here's the idea that makes Vim click. An **operator** says *what* to do and a **motion** says *how far*:"),
@@ -271,7 +258,6 @@ const operators: Section = {
         list("`d` delete", "`c` change (delete, then start inserting)", "`y` yank (copy)"),
         p("Every motion you've learned works with every operator. Learn one new motion and you get three new edits."),
         p("Typing an operator twice applies it to the whole line: `dd`, `cc`, `yy`."),
-        callout("The rest of the curriculum (operators, search, text objects, visual mode) is part of Pro.", "Heads up"),
       ],
       editor: { playground: SAMPLE },
     },
@@ -279,7 +265,6 @@ const operators: Section = {
       slug: "delete-words",
       title: "Delete Words",
       keys: ["d", "w"],
-      pro: true,
       introduces: ["d"],
       blocks: [
         keys(k("d w", "delete from the cursor to the start of the next word", demo(SAMPLE, [0, 6], "dw"))),
@@ -291,7 +276,6 @@ const operators: Section = {
       slug: "change-words",
       title: "Change Words",
       keys: ["c", "w"],
-      pro: true,
       introduces: ["c"],
       blocks: [
         keys(k("c w", "change from the cursor to the end of the word", demo(SAMPLE, [0, 6], "cwsum<Esc>"))),
@@ -303,7 +287,6 @@ const operators: Section = {
       slug: "delete-lines",
       title: "Delete Lines",
       keys: ["d", "d", "D"],
-      pro: true,
       introduces: ["D", "C"],
       blocks: [
         keys(
@@ -318,7 +301,6 @@ const operators: Section = {
       slug: "delete-multiple-lines",
       title: "Delete Multiple Lines",
       keys: ["d", "j", "k"],
-      pro: true,
       introduces: [],
       blocks: [
         p("`j` and `k` are **linewise** motions, so an operator combined with them works on whole lines."),
@@ -334,7 +316,6 @@ const operators: Section = {
       slug: "copy-paste-lines",
       title: "Copy/Paste Lines",
       keys: ["y", "p", "P"],
-      pro: true,
       introduces: ["y", "p", "P", "Y"],
       blocks: [
         keys(
@@ -356,7 +337,6 @@ const vertical: Section = {
       slug: "relative-line-jumps",
       title: "Relative Line Jumps",
       keys: ["{n}", "j", "k"],
-      pro: true,
       introduces: ["count"],
       editor: { relativeNumbers: true },
       blocks: [
@@ -370,7 +350,6 @@ const vertical: Section = {
       slug: "absolute-line-jumps",
       title: "Absolute Line Jumps",
       keys: ["g", "g", "G"],
-      pro: true,
       introduces: ["gg", "G"],
       blocks: [
         keys(
@@ -385,7 +364,6 @@ const vertical: Section = {
       slug: "paragraph-jumps",
       title: "Paragraph Jumps",
       keys: ["}", "{"],
-      pro: true,
       introduces: ["}", "{"],
       blocks: [
         p("Blank lines split text into **paragraphs**. In code, those are usually logical blocks."),
@@ -397,7 +375,6 @@ const vertical: Section = {
       slug: "window-scrolls",
       title: "Window Scrolls",
       keys: ["Ctrl+u", "Ctrl+d"],
-      pro: true,
       introduces: ["<C-d>", "<C-u>"],
       editor: { halfPage: 8 },
       blocks: [
@@ -416,7 +393,6 @@ const search: Section = {
       slug: "search",
       title: "Search",
       keys: ["/", "?"],
-      pro: true,
       introduces: ["/", "?"],
       blocks: [
         keys(k("/ {text} Enter", "search forward", demo(SAMPLE, [0, 0], "/notify<CR>")), k("? {text} Enter", "search backward")),
@@ -428,7 +404,6 @@ const search: Section = {
       slug: "repeat-search",
       title: "Repeat Search",
       keys: ["n", "N"],
-      pro: true,
       introduces: ["n", "N"],
       blocks: [keys(k("n", "next match, same direction"), k("N", "previous match, opposite direction"))],
       challenge: vim(10, G.searchRepeat, "Search, then use n / N to reach the right match."),
@@ -437,7 +412,6 @@ const search: Section = {
       slug: "quick-word-search",
       title: "Quick Word Search",
       keys: ["*", "#"],
-      pro: true,
       introduces: ["*", "#"],
       blocks: [keys(k("*", "search forward for the word under the cursor"), k("#", "search backward for the word under the cursor"))],
       challenge: vim(10, G.starSearch, "Jump to another use of the word under the cursor."),
@@ -446,7 +420,6 @@ const search: Section = {
       slug: "search-review",
       title: "Search Review",
       keys: ["Review"],
-      pro: true,
       introduces: [],
       blocks: [p("A mix of every search technique. Pick the quickest one each round.")],
       challenge: vim(12, G.searchReview, "Reach every target as efficiently as you can."),
@@ -459,7 +432,6 @@ function objLesson(slug: string, title: string, ks: string[], intro: string, gen
     slug,
     title,
     keys: ks,
-    pro: true,
     introduces,
     blocks: [keys({ keys: ks, desc: intro, demo: d })],
     challenge: vim(10, gen, "Make the code match the goal."),
@@ -478,7 +450,6 @@ const bracketObjects: Section = {
       slug: "intro-to-text-objects",
       title: "Intro to Text Objects",
       keys: ["text objects"],
-      pro: true,
       introduces: [],
       blocks: [
         p("A **text object** picks out a chunk of text based on structure (a word, a pair of brackets, a string) instead of on cursor movement. It goes where a motion would:"),
@@ -492,7 +463,7 @@ const bracketObjects: Section = {
     objLesson("delete-around-brackets", "Delete Around Brackets", ["d", "a", "{"], "delete the brackets and everything inside them", G.deleteAroundBrackets, demo(BR_DEMO, [1, 10], "da{"), ["a(", "a[", "a{"]),
     objLesson("change-inside-brackets", "Change Inside Brackets", ["c", "i", "{"], "replace what's inside the brackets", G.changeInsideBrackets, demo(BR_DEMO, [0, 8], "ci(ok<Esc>")),
     objLesson("change-around-brackets", "Change Around Brackets", ["c", "a", "{"], "replace the brackets and their contents", G.changeAroundBrackets, demo(BR_DEMO, [1, 10], "ca{opts<Esc>")),
-    { slug: "brackets-review", title: "Brackets Review", keys: ["Review"], pro: true, introduces: [], blocks: [p("Every bracket text object, mixed together.")], challenge: vim(12, G.bracketsReview, "Make the code match the goal.") },
+    { slug: "brackets-review", title: "Brackets Review", keys: ["Review"], introduces: [], blocks: [p("Every bracket text object, mixed together.")], challenge: vim(12, G.bracketsReview, "Make the code match the goal.") },
   ],
 }
 
@@ -503,7 +474,7 @@ const quoteObjects: Section = {
     objLesson("delete-around-quotes", "Delete Around Quotes", ["d", "a", '"'], "delete the string, quotes included", G.deleteAroundQuotes, demo(Q_DEMO, [0, 9], 'da"'), ['a"', "a'", "a`"]),
     objLesson("change-inside-quotes", "Change Inside Quotes", ["c", "i", '"'], "rewrite the string's contents", G.changeInsideQuotes, demo(Q_DEMO, [0, 9], 'ci"Hi<Esc>')),
     objLesson("change-around-quotes", "Change Around Quotes", ["c", "a", '"'], "swap the whole string for something else", G.changeAroundQuotes, demo(Q_DEMO, [0, 9], 'ca"msg<Esc>')),
-    { slug: "quotes-review", title: "Quotes Review", keys: ["Review"], pro: true, introduces: [], blocks: [p("Every quote text object, mixed together.")], challenge: vim(12, G.quotesReview, "Make the code match the goal.") },
+    { slug: "quotes-review", title: "Quotes Review", keys: ["Review"], introduces: [], blocks: [p("Every quote text object, mixed together.")], challenge: vim(12, G.quotesReview, "Make the code match the goal.") },
   ],
 }
 
@@ -513,7 +484,7 @@ const wordObjects: Section = {
     objLesson("delete-inside-word", "Delete Inside Word", ["d", "i", "w"], "delete the word under the cursor (not the spaces around it)", G.deleteInsideWord, demo(SAMPLE, [0, 9], "diw"), ["iw", "iW"]),
     objLesson("delete-around-word", "Delete Around Word", ["d", "a", "w"], "delete the word and the space after it", G.deleteAroundWord, demo(SAMPLE, [0, 9], "daw"), ["aw", "aW"]),
     objLesson("change-inside-word", "Change Inside Word", ["c", "i", "w"], "rename the word under the cursor, from anywhere inside it", G.changeInsideWord, demo(SAMPLE, [0, 9], "ciwsum<Esc>")),
-    { slug: "words-review", title: "Words Review", keys: ["Review"], pro: true, introduces: [], blocks: [p("Word text objects, mixed together.")], challenge: vim(12, G.wordsReview, "Make the code match the goal.") },
+    { slug: "words-review", title: "Words Review", keys: ["Review"], introduces: [], blocks: [p("Word text objects, mixed together.")], challenge: vim(12, G.wordsReview, "Make the code match the goal.") },
   ],
 }
 
@@ -528,14 +499,14 @@ const paragraphObjects: Section = {
     objLesson("delete-inside-paragraph", "Delete Inside Paragraph", ["d", "i", "p"], "delete the block of lines the cursor is in", G.deleteInsideParagraph, demo(PARA_DEMO, [0, 0], "dip"), ["ip"]),
     objLesson("delete-around-paragraph", "Delete Around Paragraph", ["d", "a", "p"], "delete the block and the blank lines after it", G.deleteAroundParagraph, demo(PARA_DEMO, [0, 0], "dap"), ["ap"]),
     objLesson("change-inside-paragraph", "Change Inside Paragraph", ["c", "i", "p"], "replace the whole block", G.changeInsideParagraph, demo(PARA_DEMO, [0, 0], "cip// todo<Esc>")),
-    { slug: "paragraphs-review", title: "Paragraphs Review", keys: ["Review"], pro: true, introduces: [], blocks: [p("Paragraph text objects, mixed together.")], challenge: vim(10, G.paragraphsReview, "Make the text match the goal.") },
+    { slug: "paragraphs-review", title: "Paragraphs Review", keys: ["Review"], introduces: [], blocks: [p("Paragraph text objects, mixed together.")], challenge: vim(10, G.paragraphsReview, "Make the text match the goal.") },
   ],
 }
 
 const megaReview: Section = {
   title: "Text Objects: Mega Review",
   lessons: [
-    { slug: "text-objects-mega-review", title: "Text Objects Mega Review", keys: ["Mega Review"], pro: true, introduces: [], blocks: [p("Brackets, quotes, words and paragraphs, all mixed together. Pick the right object every time.")], challenge: vim(20, G.textObjectsMega, "Make the code match the goal.") },
+    { slug: "text-objects-mega-review", title: "Text Objects Mega Review", keys: ["Mega Review"], introduces: [], blocks: [p("Brackets, quotes, words and paragraphs, all mixed together. Pick the right object every time.")], challenge: vim(20, G.textObjectsMega, "Make the code match the goal.") },
   ],
 }
 
@@ -546,7 +517,6 @@ const visual: Section = {
       slug: "intro-to-visual-mode",
       title: "Intro to Visual Mode",
       keys: ["v", "Esc"],
-      pro: true,
       introduces: ["v"],
       blocks: [
         p("Visual mode lets you **see** what you're about to operate on. Press `v`, move with any motion to grow the selection, then press an operator."),
@@ -559,7 +529,6 @@ const visual: Section = {
       slug: "visual-mode-operators",
       title: "Visual Mode Operators",
       keys: ["d", "c", "y"],
-      pro: true,
       introduces: [],
       blocks: [keys(k("d", "delete the selection"), k("c", "change the selection"), k("y", "yank the selection"))],
       challenge: vim(10, G.visualOperators, "Select, then delete, change or yank and paste."),
@@ -568,7 +537,6 @@ const visual: Section = {
       slug: "visual-switch-ends",
       title: "Switch Selection Ends",
       keys: ["v", "o"],
-      pro: true,
       introduces: ["v_o"],
       blocks: [p("Inside visual mode, `o` moves the cursor to the **other** end of the selection, so you can grow or shrink either side."), keys(k("o", "jump to the other end of the selection", demo(SAMPLE, [0, 14], "veohhd")))],
       challenge: vim(8, G.visualSwitchEnds, "Select and delete. Use o if you started in the wrong place."),
@@ -577,7 +545,6 @@ const visual: Section = {
       slug: "visual-line-mode",
       title: "Visual Line Mode",
       keys: ["V", "Esc"],
-      pro: true,
       introduces: ["V"],
       blocks: [keys(k("V", "select whole lines", demo(SAMPLE, [1, 0], "Vjd")))],
       challenge: vim(8, G.visualLineIntro, "Select the junk lines with V and delete them."),
@@ -586,7 +553,6 @@ const visual: Section = {
       slug: "visual-line-switch-ends",
       title: "Switch Visual Line Ends",
       keys: ["V", "o"],
-      pro: true,
       introduces: [],
       blocks: [p("`o` works in visual line mode too, letting you extend the selection upward or downward.")],
       challenge: vim(8, G.visualLineIntro, "Delete the junk block, from whichever end is closest."),
@@ -595,7 +561,6 @@ const visual: Section = {
       slug: "visual-line-operators",
       title: "Visual Line Operators",
       keys: ["V", "d", "y"],
-      pro: true,
       introduces: [],
       blocks: [p("Combine `V` with `d`, `y` and `p` to delete, duplicate and move blocks of code.")],
       challenge: vim(10, G.visualLineOperators, "Delete or duplicate whole blocks of lines."),

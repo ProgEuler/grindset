@@ -2,10 +2,10 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { Check, Lock } from "@meteor-icons/react"
+import { Check } from "@meteor-icons/react"
 import type { Track } from "@/lib/tracks/types"
 import { getTrack } from "@/lib/tracks"
-import { useApp, useHydrated, useTrackProgress } from "@/lib/store"
+import { useHydrated, useTrackProgress } from "@/lib/store"
 import { cn } from "@/lib/utils"
 import { KeyBadge } from "@/components/key-badge"
 
@@ -13,7 +13,6 @@ export function LessonSidebar({ trackSlug, onNavigate }: { trackSlug: string; on
   const track = getTrack(trackSlug) as Track
   const params = useParams<{ lesson?: string }>()
   const progress = useTrackProgress(track.slug)
-  const pro = useApp((s) => s.pro)
   const hydrated = useHydrated()
 
   return (
@@ -25,7 +24,6 @@ export function LessonSidebar({ trackSlug, onNavigate }: { trackSlug: string; on
             {section.lessons.map((l) => {
               const active = params.lesson === l.slug
               const done = hydrated && progress.lessons[l.slug]?.completed
-              const locked = l.pro && !(hydrated && pro)
               return (
                 <li key={l.slug}>
                   <Link
@@ -37,13 +35,9 @@ export function LessonSidebar({ trackSlug, onNavigate }: { trackSlug: string; on
                     )}
                   >
                     <span className="flex size-4 shrink-0 items-center justify-center">
-                      {done ? (
-                        <Check className="size-4 text-emerald-500" />
-                      ) : locked ? (
-                        <Lock className="size-3.5 text-muted-foreground" />
-                      ) : null}
+                      {done && <Check className="size-4 text-emerald-500" />}
                     </span>
-                    <span className={cn("flex-1 truncate", locked && "text-muted-foreground")}>{l.title}</span>
+                    <span className="flex-1 truncate">{l.title}</span>
                     <span className="flex shrink-0 gap-0.5">
                       {l.keys.map((k, i) => (
                         <KeyBadge key={i} k={k} className="h-5 min-w-5 px-1 text-[10px]" />

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, Microchip, Command, Layers, Refresh } from "@meteor-icons/react"
 import { TRACKS, lessonCount } from "@/lib/tracks"
-import { PRO_PLAN, SITE } from "@/lib/config"
+import { SITE } from "@/lib/config"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -33,7 +33,7 @@ export default function Home() {
     <main className="mx-auto w-full max-w-6xl space-y-24 px-4 py-16">
       <section className="grid items-center gap-10 lg:grid-cols-2 [&>*]:min-w-0">
         <div className="space-y-6">
-          <Badge variant="secondary">Interactive · in your browser · free to start</Badge>
+          <Badge variant="secondary">Interactive · in your browser · 100% free</Badge>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Learn Vim. <span className="text-primary">Finally make it stick.</span>
           </h1>
@@ -94,7 +94,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="flex gap-2 text-xs">
                   <Badge variant="secondary">{c.total} lessons</Badge>
-                  <Badge variant="outline">{c.free} free</Badge>
+                  <Badge variant="outline">free</Badge>
                   <Badge variant="outline">{t.engine === "vim" ? "live editor" : "recall drills"}</Badge>
                 </CardContent>
                 <CardFooter>
@@ -109,17 +109,17 @@ export default function Home() {
       </section>
 
       <section className="rounded-2xl border bg-muted/30 p-10 text-center">
-        <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Free to start</p>
+        <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Free forever</p>
         <h2 className="mt-2 text-3xl font-bold">No setup. No config files.</h2>
         <p className="mt-2 text-muted-foreground">
-          Just open your browser and start moving. Unlock everything for ${PRO_PLAN.price}, once.
+          Just open your browser and start moving. Every lesson, drill and tool is free. No account, no subscription.
         </p>
         <div className="mt-6 flex justify-center gap-3">
           <Link href="/learn/vim" className={buttonVariants({ size: "lg" })}>
             Start learning
           </Link>
-          <Link href="/upgrade" className={cn(buttonVariants({ size: "lg", variant: "outline" }))}>
-            See Pro
+          <Link href="/playground" className={cn(buttonVariants({ size: "lg", variant: "outline" }))}>
+            Open the playground
           </Link>
         </div>
       </section>

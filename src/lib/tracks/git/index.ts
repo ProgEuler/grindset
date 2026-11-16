@@ -2,7 +2,7 @@ import type { QuizQuestion, Track } from "@/lib/tracks/types"
 
 /**
  * A second, quiz-based track. It shows the platform isn't tied to Vim:
- * the same sidebar, Pro gating, practice, XP and stats all work for it.
+ * the same sidebar, practice, XP and stats all work for it.
  */
 
 const q = (prompt: string, answer: string | string[], commands: string[], explain?: string, choices?: string[]): QuizQuestion => ({
@@ -60,7 +60,6 @@ export const gitTrack: Track = {
           slug: "first-commit",
           title: "Your First Commit",
           keys: ["init", "add", "commit"],
-          pro: false,
           introduces: ["init", "status", "add", "commit", "log"],
           blocks: [
             { type: "p", text: "Every Git workflow comes down to three steps: **change** files, **stage** what you want to keep, and **commit** a snapshot." },
@@ -73,7 +72,6 @@ export const gitTrack: Track = {
           slug: "branching",
           title: "Branching & Merging",
           keys: ["branch", "switch", "merge"],
-          pro: false,
           introduces: ["branch", "switch", "merge", "rebase"],
           blocks: [
             { type: "p", text: "Branches are cheap pointers to commits. Make one for every feature or fix." },
@@ -90,7 +88,6 @@ export const gitTrack: Track = {
           slug: "undoing-things",
           title: "Undoing Things",
           keys: ["restore", "stash", "revert"],
-          pro: true,
           introduces: ["restore", "stash", "revert"],
           blocks: [
             { type: "p", text: "Most mistakes in Git can be undone. The trick is knowing which tool matches which kind of mistake." },
@@ -102,12 +99,12 @@ export const gitTrack: Track = {
     },
   ],
   commands: [
-    ...["init", "status", "add", "commit", "log"].map((id) => ({ id, name: `git ${id}`, label: id, group: "foundations", pro: false })),
-    ...["branch", "switch", "merge", "rebase"].map((id) => ({ id, name: `git ${id}`, label: id, group: "branching", pro: false })),
-    ...["restore", "stash", "revert"].map((id) => ({ id, name: `git ${id}`, label: id, group: "fixing mistakes", pro: true })),
+    ...["init", "status", "add", "commit", "log"].map((id) => ({ id, name: `git ${id}`, label: id, group: "foundations" })),
+    ...["branch", "switch", "merge", "rebase"].map((id) => ({ id, name: `git ${id}`, label: id, group: "branching" })),
+    ...["restore", "stash", "revert"].map((id) => ({ id, name: `git ${id}`, label: id, group: "fixing mistakes" })),
   ],
   practice: [
-    { id: "basics", label: "basics", pro: false, lessons: ["first-commit", "branching"] },
-    { id: "undo", label: "undoing", pro: true, lessons: ["undoing-things"] },
+    { id: "basics", label: "basics", lessons: ["first-commit", "branching"] },
+    { id: "undo", label: "undoing", lessons: ["undoing-things"] },
   ],
 }

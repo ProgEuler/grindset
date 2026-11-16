@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { KeyList } from "@/components/key-badge"
 import { RichText } from "@/components/rich-text"
 import { VimDemo } from "@/components/vim/vim-demo"
+import { SaveButton } from "@/components/save-button"
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-")
 
@@ -84,6 +85,17 @@ function MoveRow({ move }: { move: ProMove }) {
           {move.type !== undefined && <span className="text-xs text-muted-foreground">then type &amp; Esc</span>}
         </div>
         <div className="flex items-center gap-2">
+          <SaveButton
+            track="vim"
+            item={{
+              id: `move:${move.pro}`,
+              kind: "move",
+              title: move.what,
+              keys: parseKeys(move.pro),
+              detail: `Instead of ${move.slow}`,
+              href: `/recap#${slug(move.pro + move.what)}`,
+            }}
+          />
           <Badge variant={saved > 0 ? "secondary" : "outline"}>{saved > 0 ? `saves ${saved} key${saved > 1 ? "s" : ""}` : "works anywhere"}</Badge>
           <Button size="xs" variant="outline" onClick={() => setOpen(!open)}>
             {open ? "Hide" : "Try it"}

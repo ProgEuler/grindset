@@ -54,7 +54,6 @@ export type SaveInput = Omit<SavedItem, "createdAt" | "note">
 
 interface AppState {
   user: { name: string; email: string } | null
-  pro: boolean
   settings: Settings
   tracks: Record<string, TrackProgress>
   /** YYYY-MM-DD -> rounds completed that day */
@@ -69,7 +68,6 @@ interface AppState {
 
   signIn: (user: { name: string; email: string }) => void
   signOut: () => void
-  setPro: (pro: boolean) => void
   updateSettings: (s: Partial<Settings>) => void
   visitLesson: (track: string, lesson: string) => void
   /** Returns the XP earned for this round. */
@@ -86,7 +84,6 @@ export const useApp = create<AppState>()(
   persist(
     (set, get) => ({
       user: null,
-      pro: false,
       settings: { relativeNumbers: false, showHints: true },
       saved: {},
 
@@ -122,7 +119,6 @@ export const useApp = create<AppState>()(
 
       signIn: (user) => set({ user }),
       signOut: () => set({ user: null }),
-      setPro: (pro) => set({ pro }),
       updateSettings: (s) => set({ settings: { ...get().settings, ...s } }),
 
       visitLesson: (track, lesson) => {

@@ -23,7 +23,7 @@ bottom of the Rules log, and a rule that changes an older one says which rule it
 | Meaning | Classes |
 | --- | --- |
 | Success, target, XP earned | `emerald-500` |
-| Pro, upgrade, premium | `amber-500` (button: `bg-amber-500 text-black hover:bg-amber-400`) |
+| Saved / bookmarked | `amber-500` |
 | Visual-mode selection | `sky-500/30` |
 | Lines that differ from the goal | `rose-500` |
 
@@ -52,11 +52,14 @@ Icon vocabulary (use the same icon for the same meaning everywhere):
 | Playground (free editor) | `Terminal` |
 | Pro moves / recap | `Sparkles` |
 | Load your own file | `File` |
-| Pro / upgrade | `Star` |
+| Save / saved items (amber when saved) | `Bookmark` |
+| Add | `Plus` |
+| Edit note | `Pencil` |
+| Remove | `Trash` |
+| Copy | `Copy` |
 | Completed / correct | `Check`, `CircleCheck` |
 | Challenge complete | `BadgeCheck` |
 | Wrong / error | `CircleXmark` |
-| Locked (Pro) | `Lock` |
 | Info callout | `CircleInfo` |
 | Warning | `TriangleExclamation` |
 | Play example | `Play` |
@@ -102,3 +105,10 @@ Icon vocabulary (use the same icon for the same meaning everywhere):
 | `code-function` | `#50fa7b` | function calls, INSERT mode badge, added goal lines |
 | `code-type` | `#8be9fd` | types / capitalized names (italic) |
 | `code-param` | `#ffb86c` | VISUAL mode badge |
+
+### R4: Everything is free
+- Grindset has no paid plan, subscription, upgrade page or locked content. Every lesson, practice mode and tool is
+  available to everyone.
+- Don't add paywalls, "Pro" badges, lock icons on content, upgrade buttons or pricing copy. ("Pro moves" means expert
+  techniques, not a paid tier.)
+- The old `/upgrade` URL permanently redirects to `/` (see `next.config.ts`).

@@ -6,12 +6,12 @@ import { TRACKS, getTrack } from "@/lib/tracks"
 import type { Track } from "@/lib/tracks/types"
 import { levelFor, proficiency, useApp, useHydrated, useTrackProgress } from "@/lib/store"
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { KeyBadge } from "@/components/key-badge"
+import { SaveButton } from "@/components/save-button"
 
 export function StatsView() {
   const params = useSearchParams()
@@ -151,10 +151,16 @@ function TrackStats({ track }: { track: Track }) {
                   return (
                     <TableRow key={c.id}>
                       <TableCell>
-                        <KeyBadge k={c.label} />
+                        <span className="flex items-center gap-1">
+                          <KeyBadge k={c.label} />
+                          <SaveButton
+                            track={track.slug}
+                            item={{ id: `command:${c.id}`, kind: "command", title: c.name, keys: [c.label], detail: c.group }}
+                          />
+                        </span>
                       </TableCell>
                       <TableCell className="text-muted-foreground">
-                        {c.name} {c.pro && <Badge variant="outline" className="ml-1 text-[10px]">pro</Badge>}
+                        {c.name}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <div className="flex gap-0.5">

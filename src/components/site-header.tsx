@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { TrendingUp, BookOpen, Star, Fire, Power, Moon, Gear, Sun, User, Bolt, Terminal, Sparkles } from "@meteor-icons/react"
+import { TrendingUp, BookOpen, Fire, Power, Moon, Gear, Sun, User, Bolt, Terminal, Sparkles, Bookmark } from "@meteor-icons/react"
 import { TRACKS, getTrack } from "@/lib/tracks"
 import { SITE } from "@/lib/config"
 import { useApp, useHydrated } from "@/lib/store"
@@ -31,7 +31,7 @@ export function SiteHeader() {
   const router = useRouter()
   const track = useCurrentTrack()
   const hydrated = useHydrated()
-  const { user, pro, signOut } = useApp()
+  const { user, signOut } = useApp()
   const lastLesson = useApp((s) => s.tracks[track.slug]?.lastLesson)
   const { resolvedTheme, setTheme } = useTheme()
 
@@ -39,6 +39,7 @@ export function SiteHeader() {
     { href: `/learn/${track.slug}${lastLesson ? `/${lastLesson}` : ""}`, match: "/learn", label: "Lessons", icon: BookOpen },
     { href: `/practice/${track.slug}`, match: "/practice", label: "Practice", icon: Fire },
     { href: `/stats?track=${track.slug}`, match: "/stats", label: "Stats", icon: TrendingUp },
+    { href: `/saved?course=${track.slug}`, match: "/saved", label: "Saved", icon: Bookmark },
     ...(track.engine === "vim"
       ? [
           { href: "/playground", match: "/playground", label: "Playground", icon: Terminal },
@@ -85,11 +86,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1">
-          {hydrated && !pro && (
-            <Link href="/upgrade?source=nav" className={cn(buttonVariants({ size: "sm" }), "bg-amber-500 text-black hover:bg-amber-400")}>
-              <Star /> <span className="hidden sm:inline">Upgrade</span>
-            </Link>
-          )}
           <Button
             variant="ghost"
             size="icon-sm"
@@ -107,7 +103,6 @@ export function SiteHeader() {
               <DropdownMenuGroup>
                 <DropdownMenuLabel>
                   {hydrated && user ? user.name : "Not signed in"}
-                  {hydrated && pro && <span className="ml-2 text-amber-500">Pro</span>}
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

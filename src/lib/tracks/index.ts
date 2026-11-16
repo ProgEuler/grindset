@@ -33,5 +33,5 @@ export function knownCommands(track: Track, lessonSlug: string): Set<string> {
 
 export function lessonCount(track: Track) {
   const lessons = allLessons(track)
-  return { total: lessons.length, free: lessons.filter((l) => !l.pro).length, pro: lessons.filter((l) => l.pro).length }
+  return { total: lessons.length }
 }

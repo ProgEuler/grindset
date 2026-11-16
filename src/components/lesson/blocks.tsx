@@ -9,18 +9,26 @@ import { CodeBlock } from "@/components/code-block"
 import { KeyList } from "@/components/key-badge"
 import { RichText } from "@/components/rich-text"
 import { VimDemo } from "@/components/vim/vim-demo"
+import { SaveButton } from "@/components/save-button"
 
-export function LessonBlocks({ blocks }: { blocks: Block[] }) {
+/** Where a block lives, so key rows can be saved under the right course. */
+export interface BlockSource {
+  track: string
+  lessonTitle: string
+  href: string
+}
+
+export function LessonBlocks({ blocks, source }: { blocks: Block[]; source?: BlockSource }) {
   return (
     <div className="space-y-4 leading-7">
       {blocks.map((b, i) => (
-        <BlockView key={i} block={b} />
+        <BlockView key={i} block={b} source={source} />
       ))}
     </div>
   )
 }
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, source }: { block: Block; source?: BlockSource }) {
   switch (block.type) {
     case "p":
       return (
@@ -59,14 +67,14 @@ function BlockView({ block }: { block: Block }) {
       return (
         <div className="divide-y rounded-xl border">
           {block.items.map((it, i) => (
-            <KeyRow key={i} item={it} />
+            <KeyRow key={i} item={it} source={source} />
           ))}
         </div>
       )
   }
 }
 
-function KeyRow({ item }: { item: Extract<Block, { type: "keys" }>["items"][number] }) {
+function KeyRow({ item, source }: { item: Extract<Block, { type: "keys" }>["items"][number]; source?: BlockSource }) {
   const [open, setOpen] = useState(false)
   return (
     <div className="p-3">
@@ -75,6 +83,19 @@ function KeyRow({ item }: { item: Extract<Block, { type: "keys" }>["items"][numb
         <span className="flex-1 text-sm text-muted-foreground">
           <RichText text={item.desc} />
         </span>
+        {source && (
+          <SaveButton
+            track={source.track}
+            item={{
+              id: `command:${item.keys.join(" ")}`,
+              kind: "command",
+              title: item.desc.replace(/[`*]/g, ""),
+              keys: item.keys,
+              detail: `From "${source.lessonTitle}"`,
+              href: source.href,
+            }}
+          />
+        )}
         {item.demo && (
           <Button size="xs" variant="outline" onClick={() => setOpen(!open)}>
             {open ? "hide example" : "show example"}

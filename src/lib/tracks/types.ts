@@ -51,7 +51,6 @@ export interface Lesson {
   title: string
   /** short key badges shown in the sidebar, e.g. ["h","j","k","l"] */
   keys: string[]
-  pro: boolean
   /** command ids first taught by this lesson (used for "known" sets and stats) */
   introduces: string[]
   blocks: Block[]
@@ -70,13 +69,11 @@ export interface CommandInfo {
   label: string
   name: string
   group: string
-  pro: boolean
 }
 
 export interface PracticeCategory {
   id: string
   label: string
-  pro: boolean
   lessons: string[]
 }
 
