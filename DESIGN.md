@@ -77,6 +77,8 @@ Icon vocabulary (use the same icon for the same meaning everywhere):
 | Keyboard / hands-on | `Command` |
 | Structured curriculum | `Layers` |
 | Track card | `Microchip` |
+| Enter full screen | `Expand` |
+| Exit full screen | `Compress` |
 
 ### R2: Use standard shadcn components for now
 - Build UI from the stock shadcn/ui components in `src/components/ui` with minimal custom styling.

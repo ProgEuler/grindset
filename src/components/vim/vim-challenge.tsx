@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Eye, Rotate, ForwardStep, BadgeCheck } from "@meteor-icons/react"
+import { Eye, Rotate, ForwardStep, BadgeCheck, Expand, Compress } from "@meteor-icons/react"
 import { createState, handleKey, type VimState } from "@/lib/vim/engine"
 import { makeRng, type Ctx, type Rng, type VimRound } from "@/lib/vim/generators"
 import { useApp } from "@/lib/store"
@@ -79,6 +79,7 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
   const [run, setRunState] = useState<Run>(initialRun)
   const [now, setNow] = useState(0)
   const [flash, setFlash] = useState<"success" | null>(null)
+  const [fullscreen, setFullscreen] = useState(false)
   const runRef = useRef(run)
   // keep the ref in lock-step so rapid keypresses never read stale state
   const setRun = useCallback((next: Run) => {
@@ -217,7 +218,7 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
   const total = goal.type === "rounds" ? goal.n : null
   const timeLeft = goal.type === "time" ? Math.max(0, goal.seconds * 1000 - elapsed) : null
 
-  return (
+  const inner = (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <Badge variant="secondary">
@@ -247,6 +248,9 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
           <Button size="xs" variant="ghost" onClick={restart}>
             <Rotate /> Restart
           </Button>
+          <Button size="xs" variant="ghost" onClick={() => setFullscreen((f) => !f)} aria-label={fullscreen ? "Exit full screen" : "Full screen"}>
+            {fullscreen ? <Compress /> : <Expand />}
+          </Button>
         </span>
       </div>
       {total && <Progress value={(run.index / total) * 100} />}
@@ -260,6 +264,7 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
           relativeNumbers={relativeNumbers}
           autoFocus={autoFocus}
           flash={flash}
+          maxLines={fullscreen ? 999 : undefined}
         />
       ) : (
         <div className="h-64 animate-pulse rounded-xl border bg-muted/40" />
@@ -283,6 +288,18 @@ export function VimChallenge({ track, generate, known, goal, halfPage, relativeN
       )}
     </div>
   )
+
+  if (fullscreen) {
+    return (
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-background p-4 sm:p-8">
+        <div className="mx-auto w-full max-w-4xl">
+          {inner}
+        </div>
+      </div>
+    )
+  }
+
+  return inner
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
